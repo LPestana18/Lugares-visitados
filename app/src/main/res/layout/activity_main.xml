@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/loginEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:hint="@string/dica_login"
+        android:padding="16dp" />
+
+    <EditText
+        android:id="@+id/senhaEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:hint="@string/dica_senha"
+        android:inputType="textPassword"
+        android:padding="16dp" />
+
+    <Button
+        android:onClick="fazerLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:text="@string/ok" />
+
+    <Button
+        android:onClick="irParaCadastro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:text="@string/quero_me_cadastrar"
+        android:background="@android:color/white" />
+
+
+
+</LinearLayout>

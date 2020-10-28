@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Lugares-visitados</string>
+
+    <string name="nome_do_local">Nome do local</string>
+    <string name="data">Data</string>
+    <string name="latitude">Latitude</string>
+    <string name="ok">OK</string>
+    <string name="descricao">Descrição</string>
+    <string name="longitude">Longitude</string>
+    <string name="add">Add</string>
+
+    <string name="dica_login">Digite seu login</string>
+    <string name="dica_senha">Digite sua senha</string>
+    <string name="quero_me_cadastrar">Quero me cadastrar</string>
+
+</resources>
