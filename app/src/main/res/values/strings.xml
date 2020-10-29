@@ -13,4 +13,15 @@
     <string name="dica_senha">Digite sua senha</string>
     <string name="quero_me_cadastrar">Quero me cadastrar</string>
 
+    <string name="cadastrar">Cadastrar novo usuário</string>
+    <string name="entrar">Entrar com cadastro existente</string>
+    <string name="cad_cadastrar">Cadastrar</string>
+    <string name="cad_cancel">Cancelar</string>
+    <string name="cad_entrar">Entrar</string>
+    <string name="nome">Nome:</string>
+    <string name="email">E-mail:</string>
+    <string name="senha">Senha:</string>
+    <string name="confSenha">Confirmar Senha:</string>
+    <string name="modificar">Modificar</string>
+
 </resources>

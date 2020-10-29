@@ -1,4 +1,4 @@
-package br.com.lucaspestana.lugares_visitados;
+package br.com.lucaspestana.lugares_visitados.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,8 +8,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+
+import br.com.lucaspestana.lugares_visitados.R;
 
 public class MainActivity extends AppCompatActivity {
 

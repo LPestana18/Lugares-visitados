@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NovoUsuarioActivity"></activity>
-        <activity android:name=".ListaLugaresActivity" />
-        <activity android:name=".AddLugarActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.NovoUsuarioActivity"></activity>
+        <activity android:name=".ui.ListaLugaresActivity" />
+        <activity android:name=".ui.AddLugarActivity" />
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
