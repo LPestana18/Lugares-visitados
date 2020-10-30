@@ -53,7 +53,7 @@
         android:layout_marginHorizontal="20dp"
         android:backgroundTint="@color/blue"
         android:textColor="@color/white"
-        android:text="@string/cad_cadastrar" />
+        android:text="@string/cad_entrar"/>
 
     <Button
         android:onClick="irParaCadastro"
@@ -65,7 +65,7 @@
         android:layout_marginHorizontal="20dp"
         android:text="@string/quero_me_cadastrar"
         android:textColor="@color/white"
-        android:background="@color/blue" />
+        android:background="@color/blue"/>
 
     </LinearLayout>
 

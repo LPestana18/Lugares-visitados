@@ -79,14 +79,27 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button_lugar"
+        android:id="@+id/button_Addlugar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:background="@color/blue"
         android:text="@string/add"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/input_layout_longitude"
         app:layout_constraintStart_toStartOf="@id/input_layout_longitude"
         app:layout_constraintTop_toBottomOf="@id/input_layout_longitude" />
 
+    <Button
+        android:id="@+id/button_cancelar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/blue"
+        android:text="@string/cad_cancel"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/button_Addlugar"
+        app:layout_constraintStart_toStartOf="@+id/button_Addlugar"
+        app:layout_constraintTop_toBottomOf="@+id/button_Addlugar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

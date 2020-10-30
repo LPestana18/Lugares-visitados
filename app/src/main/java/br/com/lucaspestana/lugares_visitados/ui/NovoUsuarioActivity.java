@@ -3,6 +3,7 @@ package br.com.lucaspestana.lugares_visitados.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import br.com.lucaspestana.lugares_visitados.Classes.User;
 import br.com.lucaspestana.lugares_visitados.R;
@@ -22,6 +25,8 @@ import br.com.lucaspestana.lugares_visitados.R;
 public class NovoUsuarioActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
         cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                nome.setText("");
                 email.setText("");
                 senha.setText("");
                 confSenha.setText("");
@@ -80,6 +86,8 @@ public class NovoUsuarioActivity extends AppCompatActivity {
                             Log.d("Login: ", "createUserWithEmail:success");
                             FirebaseUser userId = mAuth.getCurrentUser();
                             User user = new User(nome, email);
+                            gravaNome(userId.getUid(), user);
+                            entrada();
                         } else {
                             // If sign in fails, display a message to the user;
                             Log.w("Login: ", "createUserWithEmail: failure", task.getException());
@@ -87,5 +95,13 @@ public class NovoUsuarioActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void gravaNome(String userId, User user) {
+        myRef.child(userId).setValue(user);
+    }
+    private void entrada() {
+        Intent intent =  new Intent(this, ListaLugaresActivity.class);
+        startActivity(intent);
     }
 }
