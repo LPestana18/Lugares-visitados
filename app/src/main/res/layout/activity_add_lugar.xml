@@ -102,4 +102,18 @@
         app:layout_constraintStart_toStartOf="@+id/button_Addlugar"
         app:layout_constraintTop_toBottomOf="@+id/button_Addlugar" />
 
+    <Button
+        android:id="@+id/textView_localizacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="54dp"
+        android:background="@color/blue"
+        android:text="@string/saber_locatizacao"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_cancelar" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,11 +3,13 @@ package br.com.lucaspestana.lugares_visitados.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -16,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import br.com.lucaspestana.lugares_visitados.Classes.Lugar;
 import br.com.lucaspestana.lugares_visitados.R;
+import br.com.lucaspestana.lugares_visitados.gps.GpsActivity;
 
 public class AddLugarActivity extends AppCompatActivity {
 
@@ -26,6 +29,7 @@ public class AddLugarActivity extends AppCompatActivity {
     EditText descricao;
     EditText latitude;
     EditText longitude;
+    Button localizacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class AddLugarActivity extends AppCompatActivity {
         descricao = findViewById(R.id.input_description);
         latitude = findViewById(R.id.input_latitude);
         longitude = findViewById(R.id.input_longitude);
+        localizacao = findViewById(R.id.textView_localizacao);
 
         Addlugar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +64,15 @@ public class AddLugarActivity extends AppCompatActivity {
                 limparCampos();
             }
         });
+
+        localizacao.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                entrarGps();
+            }
+
+        });
     }
 
     private void gravaLugar(String userId, Lugar lugar) {
@@ -76,5 +90,9 @@ public class AddLugarActivity extends AppCompatActivity {
         latitude.setText("");
         longitude.setText("");
         getCurrentFocus().clearFocus();
+    }
+
+    private void entrarGps(){
+        startActivity(new Intent(this, GpsActivity.class));
     }
 }

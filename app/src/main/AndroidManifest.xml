@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.lucaspestana.lugares_visitados">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.NovoUsuarioActivity"></activity>
+        <activity android:name=".gps.GpsActivity"></activity>
+        <activity android:name=".ui.NovoUsuarioActivity" />
         <activity android:name=".ui.ListaLugaresActivity" />
         <activity android:name=".ui.AddLugarActivity" />
         <activity android:name=".ui.MainActivity">

@@ -23,5 +23,7 @@
     <string name="senha">Senha:</string>
     <string name="confSenha">Confirmar Senha:</string>
     <string name="modificar">Modificar</string>
+    <string name="onde_estou_localizado">Onde estou localizado</string>
+    <string name="saber_locatizacao">Saber locatização</string>
 
 </resources>
