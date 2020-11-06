@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -29,7 +30,7 @@ public class AddLugarActivity extends AppCompatActivity {
     EditText descricao;
     EditText latitude;
     EditText longitude;
-    Button localizacao;
+    TextView localizacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,7 @@ public class AddLugarActivity extends AppCompatActivity {
 
         });
     }
+
 
     private void gravaLugar(String userId, Lugar lugar) {
         myRef.child(userId).setValue(lugar);

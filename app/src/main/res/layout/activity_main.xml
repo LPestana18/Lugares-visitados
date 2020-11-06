@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -18,54 +17,52 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/dica_login"
             android:layout_margin="8dp"
-            android:textColorHint="@color/blue">
+            android:padding="4dp"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/loginEditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:hint="@string/dica_login"
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/dica_senha"
-        android:layout_margin="8dp"
-        android:textColorHint="@color/blue">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/senhaEditText"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_margin="8dp"
+            android:hint="@string/dica_senha">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/senhaEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <Button
-        android:onClick="fazerLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="20dp"
-        android:backgroundTint="@color/blue"
-        android:textColor="@color/white"
-        android:text="@string/cad_entrar"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_buttton_rounded"
+            android:onClick="fazerLogin"
+            android:padding="16dp"
+            android:text="@string/cad_entrar"
+            android:textColor="@color/white" />
 
-    <Button
-        android:onClick="irParaCadastro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="14dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="12dp"
-        android:layout_marginHorizontal="20dp"
-        android:text="@string/quero_me_cadastrar"
-        android:textColor="@color/white"
-        android:background="@color/blue"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="102dp"
+            android:layout_marginTop="32dp"
+            android:onClick="irParaCadastro"
+            android:text="@string/cadastrar"
+            android:textColor="@color/blue" />
 
     </LinearLayout>
 

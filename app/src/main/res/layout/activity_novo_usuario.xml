@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/nome"
-            android:textColorHint="@color/blue">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edNome"
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
-            android:textColorHint="@color/blue">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edEmail"
@@ -45,8 +45,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/senha"
-            android:textColorHint="@color/blue">
+            android:hint="@string/senha">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edSenha"
@@ -58,8 +57,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/confSenha"
-            android:textColorHint="@color/blue">
+            android:hint="@string/confSenha">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edConfSenha"
                 android:inputType="textPassword"
@@ -71,8 +69,8 @@
             android:id="@+id/btnCadastrar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:backgroundTint="@color/blue"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_buttton_rounded"
             android:textColor="@color/white"
             android:text="@string/cad_cadastrar" />
 
@@ -80,7 +78,8 @@
             android:id="@+id/btnCancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/blue"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_buttton_rounded"
             android:textColor="@color/white"
             android:text="@string/cad_cancel" />
     </LinearLayout>

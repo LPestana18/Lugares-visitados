@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:text="@string/onde_estou_localizado"
         android:layout_marginTop="12dp"
-        android:background="@color/blue"
+        android:background="@drawable/bg_buttton_rounded"
         android:textColor="@color/white"
         />
 

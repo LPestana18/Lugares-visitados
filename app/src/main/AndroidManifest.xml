@@ -11,17 +11,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".gps.GpsActivity"></activity>
-        <activity android:name=".ui.NovoUsuarioActivity" />
-        <activity android:name=".ui.ListaLugaresActivity" />
-        <activity android:name=".ui.AddLugarActivity" />
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".gps.GpsActivity" android:label="@string/onde_estou_localizado">
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".ui.AddLugarActivity"/>
+        </activity>
+
+        <activity android:name=".ui.NovoUsuarioActivity" android:label="@string/cadastrar">
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".ui.MainActivity"/>
+        </activity>
+
+        <activity android:name=".ui.ListaLugaresActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.AddLugarActivity" android:label="@string/novo_lugar">
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".ui.ListaLugaresActivity"/>
+        </activity>
+
+        <activity android:name=".ui.MainActivity"/>
     </application>
 
 </manifest>
