@@ -131,11 +131,10 @@ public class ListaLugaresActivity extends AppCompatActivity {
             TextView txtDescription = viewHolder.itemView.findViewById(R.id.text_lugares_descricao);
 
             txtName.setText(place.getNome());
+            txtDescription.setText(place.getDescricao());
 
             Picasso.get()
                     .load(place.getNome());
-
-
         }
 
         @Override
