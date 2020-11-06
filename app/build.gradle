@@ -39,8 +39,19 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation 'com.google.firebase:firebase-auth:20.0.0'
-    implementation 'com.google.firebase:firebase-database:19.5.1'
-    testImplementation 'junit:junit:4.12'
+    implementation 'com.google.firebase:firebase-firestore:22.0.0'
+
+    //circle image view
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // Framework groupie
+    implementation "com.xwray:groupie:2.8.1"
+    implementation "com.xwray:groupie-viewbinding:2.8.1"
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'com.google.firebase:firebase-storage:19.2.0'
+    testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 

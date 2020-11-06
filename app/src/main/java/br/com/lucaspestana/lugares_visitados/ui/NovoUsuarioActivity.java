@@ -1,9 +1,7 @@
 package br.com.lucaspestana.lugares_visitados.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,97 +9,116 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import br.com.lucaspestana.lugares_visitados.Classes.User;
 import br.com.lucaspestana.lugares_visitados.R;
 
 public class NovoUsuarioActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("users");
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    private Button mButtonRegister;
+    private Button mButtonCancel;
+    private EditText mEditName;
+    private EditText mEditEmail;
+    private EditText mEditPassword;
+    private EditText mEditConfPassword;
+    private Uri mSelectedUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_usuario);
 
-        mAuth = FirebaseAuth.getInstance();
+        mButtonRegister = findViewById(R.id.btnCadastrar);
+        mButtonCancel = findViewById(R.id.btnCancel);
+        mEditName = findViewById(R.id.edNome);
+        mEditEmail = findViewById(R.id.edEmail);
+        mEditPassword = findViewById(R.id.edSenha);
+        mEditConfPassword = findViewById(R.id.edConfSenha);
 
-        Button cadastrar = findViewById(R.id.btnCadastrar);
-        Button cancelar = findViewById(R.id.btnCancel);
-        final EditText nome = findViewById(R.id.edNome);
-        final EditText email = findViewById(R.id.edEmail);
-        final EditText senha = findViewById(R.id.edSenha);
-        final EditText confSenha = findViewById(R.id.edConfSenha);
-
-        cadastrar.setOnClickListener(new View.OnClickListener() {
+        mButtonRegister.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                if (email.getText().toString() != "") {
-                    Log.d("Btn: ", " email");
-                    if (senha.getText().toString().equals(confSenha.getText().toString())) {
-                        if (senha.getText().length() > 5) {
-                            Log.d("Btn: ", "senha");
-                            criarUser(email.getText().toString(), senha.getText().toString(), nome.getText().toString());
-                        } else {
-                            Toast.makeText(NovoUsuarioActivity.this, "Senha com minimo de 6 caracteres", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(NovoUsuarioActivity.this, "Senha não conferem", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(NovoUsuarioActivity.this, "E-mail vazio", Toast.LENGTH_SHORT).show();
-                }
+                createUser();
             }
         });
 
-        cancelar.setOnClickListener(new View.OnClickListener() {
+        mButtonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nome.setText("");
-                email.setText("");
-                senha.setText("");
-                confSenha.setText("");
+                mEditName.setText("");
+                mEditEmail.setText("");
+                mEditPassword.setText("");
+                mEditConfPassword.setText("");
                 getCurrentFocus().clearFocus();
             }
         });
     }
 
-    private void criarUser(final String email, String password, final String nome) {
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+    private void createUser() {
+        String name = mEditName.getText().toString();
+        String email = mEditEmail.getText().toString();
+        String password = mEditPassword.getText().toString();
+        String confPassword = mEditConfPassword.getText().toString();
+
+        if(name == null || name.isEmpty() || email == null || email.isEmpty() || password == null || password.isEmpty()
+                || confPassword == null || confPassword.isEmpty()){
+            Toast.makeText(this, "Nome, Email e senha devem ser preenchidos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("Login: ", "createUserWithEmail:success");
-                            FirebaseUser userId = mAuth.getCurrentUser();
-                            User user = new User(nome, email);
-                            gravaNome(userId.getUid(), user);
-                            entrada();
-                        } else {
-                            // If sign in fails, display a message to the user;
-                            Log.w("Login: ", "createUserWithEmail: failure", task.getException());
-                            Toast.makeText(NovoUsuarioActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                        if(task.isSuccessful()) {
+                            Log.i("Teste", task.getResult().getUser().getUid());
+
+                            saveUserInFirebase();
                         }
                     }
-                });
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("Teste", e.getMessage());
+            }
+        });
     }
 
-    private void gravaNome(String userId, User user) {
-        myRef.child(userId).setValue(user);
-    }
-    private void entrada() {
-        Intent intent =  new Intent(this, ListaLugaresActivity.class);
-        startActivity(intent);
+    private void saveUserInFirebase() {
+        String name = mEditName.getText().toString();
+        String email = mEditEmail.getText().toString();
+
+        User user = new User(name, email);
+        db.collection("users")
+                .add(user)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.i("Teste", documentReference.getId());
+                        Intent intent = new Intent(NovoUsuarioActivity.this, ListaLugaresActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.i("Teste", e.getMessage());
+                    }
+                });
     }
 }

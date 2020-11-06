@@ -28,6 +28,14 @@
             tools:text="Buenos Aires" />
 
         <TextView
+            android:id="@+id/text_lugares_descricao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            tools:text="bonitooo" />
+
+        <TextView
             android:id="@+id/text_lugares_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,100 +1,116 @@
 package br.com.lucaspestana.lugares_visitados.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-import br.com.lucaspestana.lugares_visitados.Classes.Lugar;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import br.com.lucaspestana.lugares_visitados.Classes.Place;
 import br.com.lucaspestana.lugares_visitados.R;
 import br.com.lucaspestana.lugares_visitados.gps.GpsActivity;
 
 public class AddLugarActivity extends AppCompatActivity {
 
-    FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = mDatabase.getReference("lugares");
-    private FirebaseAuth mAuth;
-    EditText nome;
-    EditText descricao;
-    EditText latitude;
-    EditText longitude;
-    TextView localizacao;
+    private EditText mEditName;
+    private EditText mEditDescription;
+    private TextView mTextlocation;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_lugar);
 
-        mAuth = FirebaseAuth.getInstance();
+        Button AddPlace = findViewById(R.id.button_Addplace);
+        Button cancel = findViewById(R.id.button_cancel);
+        mEditName = findViewById(R.id.input_name);
+        mEditDescription = findViewById(R.id.input_description);
+        mTextlocation = findViewById(R.id.textView_location);
 
-        Button Addlugar = findViewById(R.id.button_Addlugar);
-        Button cancelar = findViewById(R.id.button_cancelar);
-        nome = findViewById(R.id.input_name);
-        descricao = findViewById(R.id.input_description);
-        latitude = findViewById(R.id.input_latitude);
-        longitude = findViewById(R.id.input_longitude);
-        localizacao = findViewById(R.id.textView_localizacao);
 
-        Addlugar.setOnClickListener(new View.OnClickListener() {
+
+        AddPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseUser userId = mAuth.getCurrentUser();
-                Lugar lugar = new Lugar(nome.getText().toString(), descricao.getText().toString(),
-                        latitude.getText().toString(), longitude.getText().toString());
-                gravaLugar(userId.getUid(), lugar);
-                esconderTeclado(v);
-                limparCampos();
+                createPlace();
+                hideKeyboard(v);
+                clearFields();
             }
         });
 
-        cancelar.setOnClickListener(new View.OnClickListener() {
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                limparCampos();
+                clearFields();
             }
         });
 
-        localizacao.setOnClickListener(new View.OnClickListener() {
-
+        mTextlocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                entrarGps();
+                enterGps();
             }
 
         });
     }
 
-
-    private void gravaLugar(String userId, Lugar lugar) {
-        myRef.child(userId).setValue(lugar);
-    }
-
-    private void esconderTeclado(View view) {
+    private void hideKeyboard(View view) {
         InputMethodManager ims = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         ims.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    private void limparCampos() {
-        nome.setText("");
-        descricao.setText("");
-        latitude.setText("");
-        longitude.setText("");
+    private void clearFields() {
+        mEditName.setText("");
+        mEditDescription.setText("");
         getCurrentFocus().clearFocus();
     }
 
-    private void entrarGps(){
+    private void createPlace () {
+        String name = mEditName.getText().toString();
+        String description = mEditDescription.getText().toString();
+
+        if (name == null || name.isEmpty() || description == null || description.isEmpty()) {
+            Toast.makeText(this, "Nome e descrição devem ser preenchidos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Place place = new Place(name, description);
+
+        db.collection("lugares")
+                .add(place)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.i("Teste", documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.i("Teste", e.getMessage());
+                    }
+                });
+
+    }
+
+    private void enterGps(){
         startActivity(new Intent(this, GpsActivity.class));
     }
+
 }
