@@ -66,17 +66,6 @@
         app:layout_constraintStart_toStartOf="@+id/button_Addplace"
         app:layout_constraintTop_toBottomOf="@+id/button_Addplace" />
 
-    <TextView
-        android:id="@+id/textView_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:textSize="14sp"
-        android:text="@string/saber_locatizacao"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_cancel" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,4 +28,5 @@
     <string name="logout">Sair</string>
     <string name="perfil">Perfil</string>
     <string name="cadastrar">Não tem uma conta? Crie aqui!</string>
+    <string name="no_gps_no_app">Sem o GPS o aplicativo não funciona</string>
 </resources>

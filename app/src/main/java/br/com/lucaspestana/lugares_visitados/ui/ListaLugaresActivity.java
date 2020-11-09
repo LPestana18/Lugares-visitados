@@ -26,6 +26,8 @@ import com.xwray.groupie.GroupAdapter;
 import com.xwray.groupie.GroupieViewHolder;
 import com.xwray.groupie.Item;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import br.com.lucaspestana.lugares_visitados.Classes.Place;
@@ -81,6 +83,7 @@ public class ListaLugaresActivity extends AppCompatActivity {
     }
 
     public void irLugares() {
+
         startActivity(new Intent(this, AddLugarActivity.class));
     }
 
@@ -129,9 +132,15 @@ public class ListaLugaresActivity extends AppCompatActivity {
         public void bind(@NonNull GroupieViewHolder viewHolder, int position) {
             TextView txtName = viewHolder.itemView.findViewById(R.id.text_lugares_nome);
             TextView txtDescription = viewHolder.itemView.findViewById(R.id.text_lugares_descricao);
+            TextView txtData = viewHolder.itemView.findViewById(R.id.text_lugares_data);
+            TextView txtLat = viewHolder.itemView.findViewById(R.id.text_lugares_latitude);
+            TextView txtLng = viewHolder.itemView.findViewById(R.id.text_lugares_longitude);
 
             txtName.setText(place.getNome());
             txtDescription.setText(place.getDescricao());
+            txtData.setText(place.getData());
+            txtLat.setText(place.getLat());
+            txtLng.setText(place.getLon());
 
             Picasso.get()
                     .load(place.getNome());
