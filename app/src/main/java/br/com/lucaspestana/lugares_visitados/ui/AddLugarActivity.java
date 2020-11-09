@@ -170,7 +170,7 @@ public class AddLugarActivity extends AppCompatActivity {
         String lat = latitudeAtual.toString();
         String lon = longitudeAtual.toString();
 
-        if (name == null || name.isEmpty() || description == null || description.isEmpty()) {
+        if (name == "" || name.isEmpty() || description == "" || description.isEmpty()) {
             Toast.makeText(this, "Nome e descrição devem ser preenchidos", Toast.LENGTH_SHORT).show();
             return;
         }

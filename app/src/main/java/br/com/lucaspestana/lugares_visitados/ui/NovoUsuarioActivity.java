@@ -36,6 +36,7 @@ public class NovoUsuarioActivity extends AppCompatActivity {
     private EditText mEditConfPassword;
     private Uri mSelectedUri;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
