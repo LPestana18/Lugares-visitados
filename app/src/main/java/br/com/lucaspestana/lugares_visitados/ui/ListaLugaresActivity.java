@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -26,6 +28,8 @@ import com.squareup.picasso.Picasso;
 import com.xwray.groupie.GroupAdapter;
 import com.xwray.groupie.GroupieViewHolder;
 import com.xwray.groupie.Item;
+import com.xwray.groupie.OnItemClickListener;
+import com.xwray.groupie.OnItemLongClickListener;
 
 import org.w3c.dom.Text;
 
@@ -37,6 +41,9 @@ import br.com.lucaspestana.lugares_visitados.R;
 public class ListaLugaresActivity extends AppCompatActivity {
 
     private GroupAdapter adapter;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +66,24 @@ public class ListaLugaresActivity extends AppCompatActivity {
                 irLugares();
             }
         });
-      
+
+
+        // click em um item da lista
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(@NonNull Item item, @NonNull View view) {
+                Intent intent = new Intent(ListaLugaresActivity.this, AddLugarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // click longo em um item da lista
+        adapter.setOnItemLongClickListener(new OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(@NonNull Item item, @NonNull View view) {
+                return true;
+            }
+        });
     }
 
     private void fetchPlaces() {
