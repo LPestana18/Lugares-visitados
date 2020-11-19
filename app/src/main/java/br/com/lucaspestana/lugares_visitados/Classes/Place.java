@@ -1,6 +1,9 @@
 package br.com.lucaspestana.lugares_visitados.Classes;
 
+import com.google.firebase.firestore.Exclude;
+
 public class Place {
+    @Exclude private String id;
     private String nome;
     private String descricao;
     private String data;
@@ -17,6 +20,14 @@ public class Place {
         this.data = data;
         this.lat = lat;
         this.lon = lon;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNome() {

@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,11 +17,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -35,17 +38,13 @@ public class AddLugarActivity extends AppCompatActivity {
 
     private EditText mEditName;
     private EditText mEditDescription;
-
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     private LocationManager locationManager;
     private LocationListener locationListener;
-
     private Double latitudeAtual;
     private Double longitudeAtual;
-
     private static final int REQUEST_CODE_GPS = 1001;
-
+    private static final String TAG = "addPlaceActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +58,19 @@ public class AddLugarActivity extends AppCompatActivity {
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+
         AddPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createPlace();
-                hideKeyboard(v);
-                clearFields();
+                if (mEditName.getText().toString() == "" || mEditName.getText().toString().isEmpty()
+                        || mEditDescription.getText().toString() == "" || mEditDescription.getText().toString().isEmpty()) {
+                    Toast.makeText(AddLugarActivity.this, "Nome e descrição devem ser preenchidos", Toast.LENGTH_SHORT).show();
+                    return;
+                }else {
+                    createPlace();
+                    hideKeyboard(v);
+                    clearFields();
+                }
             }
         });
 
@@ -170,22 +176,20 @@ public class AddLugarActivity extends AppCompatActivity {
         String lat = latitudeAtual.toString();
         String lon = longitudeAtual.toString();
 
-        if (name == "" || name.isEmpty() || description == "" || description.isEmpty()) {
-            Toast.makeText(this, "Nome e descrição devem ser preenchidos", Toast.LENGTH_SHORT).show();
-            return;
-        }
         Place place = new Place(name, description, date, lat, lon);
         db.collection("lugares")
                 .add(place)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.i("Teste", documentReference.getId());
+                        Toast.makeText(AddLugarActivity.this, "Lugar adicionado com sucesso!", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(AddLugarActivity.this, "Erro ao inserir o Lugar!", Toast.LENGTH_SHORT).show();
                         Log.i("Teste", e.getMessage());
                     }
                 });

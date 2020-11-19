@@ -1,5 +1,6 @@
 package br.com.lucaspestana.lugares_visitados.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,18 +12,25 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Placeholder;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 import com.xwray.groupie.GroupAdapter;
@@ -33,17 +41,20 @@ import com.xwray.groupie.OnItemLongClickListener;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.lucaspestana.lugares_visitados.Classes.Place;
+import br.com.lucaspestana.lugares_visitados.MapsActivity;
 import br.com.lucaspestana.lugares_visitados.R;
+import okhttp3.internal.Util;
 
 public class ListaLugaresActivity extends AppCompatActivity {
 
     private GroupAdapter adapter;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    List<Place> modelList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +83,7 @@ public class ListaLugaresActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull Item item, @NonNull View view) {
-                Intent intent = new Intent(ListaLugaresActivity.this, AddLugarActivity.class);
-                startActivity(intent);
+                irMaps();
             }
         });
 
@@ -81,6 +91,19 @@ public class ListaLugaresActivity extends AppCompatActivity {
         adapter.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(@NonNull Item item, @NonNull View view) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ListaLugaresActivity.this);
+
+                String[] options = {"Deletar"};
+
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0) {
+                            deleteLugar();
+                        }
+                    }
+                }).create().show();
                 return true;
             }
         });
@@ -101,9 +124,30 @@ public class ListaLugaresActivity extends AppCompatActivity {
                             Place place = doc.toObject(Place.class);
                             Log.d("Teste", place.getNome());
 
+
                             adapter.add(new PlaceItem(place));
+                            modelList.add(place);
 
                         }
+                    }
+                });
+    }
+
+    private void deleteLugar() {
+
+        db.collection("lugares")
+                .document(" q7XiUtfdVtkg0rxCMSUI")
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(ListaLugaresActivity.this, "DocumentSnapshot successfully deleted", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Teste", "Error deleting document", e);
                     }
                 });
     }
@@ -111,6 +155,10 @@ public class ListaLugaresActivity extends AppCompatActivity {
     public void irLugares() {
 
         startActivity(new Intent(this, AddLugarActivity.class));
+    }
+
+    public void irMaps() {
+        startActivity(new Intent(this, MapsActivity.class));
     }
 
     @Override
@@ -136,8 +184,8 @@ public class ListaLugaresActivity extends AppCompatActivity {
 
     }
 
-    private void verifyAuthentication(){
-        if (FirebaseAuth.getInstance().getUid() == null){
+    private void verifyAuthentication() {
+        if (FirebaseAuth.getInstance().getUid() == null) {
             Intent intent = new Intent(ListaLugaresActivity.this, MainActivity.class);
 
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -146,13 +194,15 @@ public class ListaLugaresActivity extends AppCompatActivity {
         }
     }
 
-    private class PlaceItem extends Item<GroupieViewHolder> {
+    public class PlaceItem extends Item<GroupieViewHolder> {
 
         private Place place;
 
         private PlaceItem(Place place) {
             this.place = place;
         }
+
+        public PlaceItem() { }
 
         @Override
         public void bind(@NonNull GroupieViewHolder viewHolder, int position) {
@@ -167,15 +217,13 @@ public class ListaLugaresActivity extends AppCompatActivity {
             txtData.setText(place.getData());
             txtLat.setText(place.getLat());
             txtLng.setText(place.getLon());
-
-            Picasso.get()
-                    .load(place.getNome());
         }
 
         @Override
         public int getLayout() {
             return R.layout.lugares_item;
         }
-    }
 
+
+    }
 }
